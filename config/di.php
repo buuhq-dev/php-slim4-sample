@@ -10,7 +10,9 @@ return [
     'settings' => function () {
         return require __DIR__ . '/settings.php';
     },
-
+    // 'baseUrl' => function () {
+    //     return __DIR__ . '/settings.php';
+    // },
     LoggerInterface::class => function (ContainerInterface $c) {
         //$settings = $c->get(SettingsInterface::class);
 

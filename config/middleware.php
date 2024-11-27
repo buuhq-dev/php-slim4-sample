@@ -4,10 +4,14 @@ use Slim\App;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 use Psr\Log\LoggerInterface;
+use App\Middleware\BaseUrlMiddleware;
+use App\Middleware\SessionMiddleware;
+use App\Middleware\AuthMiddleware;
 
 return function (App $app) {
     /** @var Psr\Container\ContainerInterface $container */
     $container = $app->getContainer();
+    $app->getBasePath();
     
     // Add the Slim built-in routing middleware
     $app->addRoutingMiddleware();
@@ -38,5 +42,12 @@ return function (App $app) {
         logErrorDetails: true,
         logger: $container->get(LoggerInterface::class),
     );
+
+    $baseUrlMiddleware = new BaseUrlMiddleware($app->getBasePath(), $container->get(Twig::class));
+    $app->add($baseUrlMiddleware);
+    $app->add(SessionMiddleware::class);
+
+    $publicUrls = [];
+    $app->add(new AuthMiddleware($publicUrls));
 
 };

@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "start": "php -S localhost:8883 -t public/"
+        "start": "php -S localhost:8884 -t public/"
     },
     "require": {
         "monolog/monolog": "^3.8",
