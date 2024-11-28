@@ -6,6 +6,10 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use App\Controllers\RoleController;
 use App\Controllers\ProductController;
+use App\Controllers\Auth\AuthController;
+use App\Controllers\Admin\DashboardController;
+use App\Middlewares\PermissionMiddleware;
+
 
 return function (App $app) {
     // Define app routes
@@ -30,4 +34,29 @@ return function (App $app) {
         $group->get('', ProductController::class . ':list');
         
     });
+
+    
+    //Auth Page
+    $app->group('/auth', function (Group $group) {
+        $group->get('/login', AuthController::class . ':login');
+        $group->post('/login', AuthController::class . ':doLogin');
+        $group->get('/logout', AuthController::class . ':logout');
+        $group->get('/forbidden', AuthController::class . ':forbidden');
+        
+    });
+    //Admin Page
+    $app->group('/admin', function (Group $group) {
+        //$group->get('/dashboard', DashboardController::class);
+        $group->get('', DashboardController::class);
+        
+    })->add(new PermissionMiddleware());;
+
+    // Not Found
+    $app->map(
+        ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+        '/{routes:.*}',
+        static function (Request $request): void {
+            throw new Slim\Exception\HttpNotFoundException($request);
+        }
+    );
 };

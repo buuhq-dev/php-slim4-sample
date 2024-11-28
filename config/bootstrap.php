@@ -16,8 +16,9 @@ return function ($rootPath) {
     
     $app = AppFactory::create();
     
-    (require $rootPath . '/config/middleware.php')($app);
     (require $rootPath . '/config/routes.php')($app);
+    (require $rootPath . '/config/middleware.php')($app);
+    
     
     return $app;
 

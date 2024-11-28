@@ -34,6 +34,14 @@ ALTER TABLE `product`
 INSERT INTO `product` (`name`, `description`, `size`) VALUES
 ('Product One', NULL, 10),
 ('Product Two', 'example', 20);
+
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('user', 'admin') NOT NULL DEFAULT 'user'
+);
 ```
 
 ```bash

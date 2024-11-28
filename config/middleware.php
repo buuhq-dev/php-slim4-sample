@@ -2,11 +2,9 @@
 
 use Slim\App;
 use Slim\Views\Twig;
-use Slim\Views\TwigMiddleware;
 use Psr\Log\LoggerInterface;
-use App\Middleware\BaseUrlMiddleware;
-use App\Middleware\SessionMiddleware;
-use App\Middleware\AuthMiddleware;
+use App\Middlewares\BaseUrlMiddleware;
+
 
 return function (App $app) {
     /** @var Psr\Container\ContainerInterface $container */
@@ -45,9 +43,9 @@ return function (App $app) {
 
     $baseUrlMiddleware = new BaseUrlMiddleware($app->getBasePath(), $container->get(Twig::class));
     $app->add($baseUrlMiddleware);
-    $app->add(SessionMiddleware::class);
+    //$app->add(SessionMiddleware::class);
 
-    $publicUrls = [];
-    $app->add(new AuthMiddleware($publicUrls));
+    //$publicUrls = [];
+    //$app->add(new AuthMiddleware($publicUrls));
 
 };

@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Abstract;
 
 use Slim\Views\Twig;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -17,5 +17,11 @@ abstract class AbstractTwigController extends AbstractController{
     protected function renderHtml(Response $response, string $template, array $data = []): Response
     {
         return $this->view->render($response, $template, $data);
+    }
+
+    protected function rendirectHtml(Response $response, string $route): Response
+    {
+        return $response->withHeader('Location', $route)
+                        ->withStatus(302);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Abstract;
 
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
